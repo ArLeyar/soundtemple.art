@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ddc9a0"/>
+      <stop offset="100%" stop-color="#c9a96e"/>
+    </linearGradient>
+  </defs>
+  <!-- Outer ring — 12-sided polygon -->
+  <polygon points="32,2 45.9,6.1 55.9,16.1 60,30 55.9,43.9 45.9,53.9 32,58 18.1,53.9 8.1,43.9 4,30 8.1,16.1 18.1,6.1" fill="none" stroke="url(#g)" stroke-width="2.5"/>
+  <!-- Dome arc -->
+  <path d="M18 38 Q32 10 46 38" fill="none" stroke="#5c3d2e" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Base line -->
+  <line x1="16" y1="38" x2="48" y2="38" stroke="#5c3d2e" stroke-width="2" stroke-linecap="round"/>
+  <!-- Center dot — resonance -->
+  <circle cx="32" cy="30" r="2.5" fill="url(#g)"/>
+</svg>
