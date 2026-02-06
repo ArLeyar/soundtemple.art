@@ -1,19 +1,420 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sound Temple</title>
+    <title>Vimana Temple — Международный Храм Музыки</title>
+    <meta name="description" content="Vimana Temple — Международный Храм Музыки на Бали. Концерты, школа, музей 108 инструментов, звуковые практики.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; }
-        html, body { width: 100%; height: 100%; overflow: hidden; }
-        embed {
+        :root {
+            --sand: #f5ede3;
+            --sand-light: #faf6f0;
+            --earth: #5c3d2e;
+            --earth-light: #7a5a4a;
+            --gold: #c9a96e;
+            --gold-light: #ddc9a0;
+            --cream: #fdfbf7;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--cream);
+            font-family: 'Jost', sans-serif;
+            color: var(--earth);
+            overflow-x: hidden;
+        }
+
+        /* ── Nav ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 0 40px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(253, 251, 247, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.4s, background 0.4s;
+        }
+
+        nav.scrolled {
+            border-bottom-color: rgba(201, 169, 110, 0.2);
+        }
+
+        .nav-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+            font-size: 20px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--earth);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--earth-light);
+            text-decoration: none;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--earth); }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* ── Hero ── */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: var(--cream);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201, 169, 110, 0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 20% 80%, rgba(201, 169, 110, 0.05) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 40% at 80% 20%, rgba(92, 61, 46, 0.03) 0%, transparent 60%);
+        }
+
+        .hero-ornament {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border: 1px solid rgba(201, 169, 110, 0.12);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: breathe 8s ease-in-out infinite;
+        }
+
+        .hero-ornament:nth-child(2) {
+            width: 420px;
+            height: 420px;
+            border-color: rgba(201, 169, 110, 0.08);
+            animation-delay: -2s;
+            animation-duration: 10s;
+        }
+
+        .hero-ornament:nth-child(3) {
+            width: 340px;
+            height: 340px;
+            border-color: rgba(201, 169, 110, 0.06);
+            animation-delay: -4s;
+            animation-duration: 12s;
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            50% { transform: translate(-50%, -50%) scale(1.08); opacity: 0.6; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            opacity: 0;
+            animation: fadeUp 1.2s ease-out 0.3s forwards;
+        }
+
+        .hero-eyebrow {
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+            font-size: clamp(42px, 7vw, 90px);
+            line-height: 1.05;
+            letter-spacing: -0.01em;
+            color: var(--earth);
+            margin-bottom: 16px;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--gold);
+        }
+
+        .hero-sub {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+            font-size: clamp(18px, 2.5vw, 26px);
+            color: var(--earth-light);
+            letter-spacing: 0.04em;
+            margin-bottom: 48px;
+        }
+
+        .hero-scroll {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--gold);
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-decoration: none;
+            opacity: 0;
+            animation: fadeUp 1s ease-out 1s forwards;
+            transition: opacity 0.3s;
+        }
+
+        .hero-scroll:hover { opacity: 0.7; }
+
+        .hero-scroll svg {
+            animation: bobDown 2s ease-in-out infinite;
+        }
+
+        @keyframes bobDown {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(6px); }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── Divider ── */
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding: 60px 40px;
+        }
+
+        .divider-line {
+            height: 1px;
+            width: 60px;
+            background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+        }
+
+        .divider-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--gold);
+            opacity: 0.5;
+        }
+
+        /* ── Slides ── */
+        #presentation {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            padding-bottom: 80px;
+        }
+
+        #presentation canvas {
+            display: block;
             width: 100%;
-            height: 100%;
+            max-width: 1100px;
+            height: auto;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        #presentation canvas.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Loading ── */
+        #loading {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--earth-light);
+            font-size: 14px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .spinner {
+            width: 36px;
+            height: 36px;
+            border: 1.5px solid rgba(201, 169, 110, 0.15);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── Footer ── */
+        footer {
+            text-align: center;
+            padding: 60px 40px 40px;
+            border-top: 1px solid rgba(201, 169, 110, 0.15);
+        }
+
+        .footer-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+            font-size: 24px;
+            letter-spacing: 0.1em;
+            color: var(--earth);
+            margin-bottom: 12px;
+        }
+
+        .footer-sub {
+            font-size: 13px;
+            color: var(--earth-light);
+            letter-spacing: 0.06em;
+            opacity: 0.7;
+        }
+
+        /* ── Mobile ── */
+        @media (max-width: 768px) {
+            nav { padding: 0 20px; }
+            .nav-links { display: none; }
+            .hero-ornament { width: 300px; height: 300px; }
+            .hero-ornament:nth-child(2) { width: 240px; height: 240px; }
+            .hero-ornament:nth-child(3) { width: 180px; height: 180px; }
+            .divider { padding: 40px 20px; }
+            footer { padding: 40px 20px 30px; }
         }
     </style>
 </head>
 <body>
-    <embed src="soundtemple.pdf" type="application/pdf" width="100%" height="100%">
+
+    <!-- Nav -->
+    <nav id="nav">
+        <a href="#" class="nav-brand">Vimana Temple</a>
+        <ul class="nav-links">
+            <li><a href="#presentation">Презентация</a></li>
+            <li><a href="soundtemple.pdf" target="_blank">Скачать PDF</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-ornament"></div>
+        <div class="hero-ornament"></div>
+        <div class="hero-ornament"></div>
+        <div class="hero-content">
+            <div class="hero-eyebrow">Bali, Indonesia</div>
+            <h1>Vimana <em>Temple</em></h1>
+            <p class="hero-sub">Международный Храм Музыки</p>
+        </div>
+        <a href="#presentation" class="hero-scroll">
+            Презентация
+            <svg width="16" height="24" viewBox="0 0 16 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M8 0v22M1 15l7 7 7-7"/>
+            </svg>
+        </a>
+    </section>
+
+    <!-- Divider -->
+    <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-dot"></div>
+        <div class="divider-line"></div>
+    </div>
+
+    <!-- Presentation -->
+    <div id="loading">
+        <div class="spinner"></div>
+        Загрузка презентации
+    </div>
+    <div id="presentation"></div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-brand">Vimana Temple</div>
+        <p class="footer-sub">International Music Temple &middot; Bali</p>
+    </footer>
+
+    <script type="module">
+        // Nav scroll effect
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // PDF rendering
+        const pdfjsLib = await import('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.9.155/pdf.min.mjs');
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.9.155/pdf.worker.min.mjs';
+
+        const pdf = await pdfjsLib.getDocument('soundtemple.pdf').promise;
+        document.getElementById('loading').remove();
+
+        const viewer = document.getElementById('presentation');
+        const scale = window.devicePixelRatio || 1;
+
+        for (let i = 1; i <= pdf.numPages; i++) {
+            const page = await pdf.getPage(i);
+            const viewport = page.getViewport({ scale: 2 * scale });
+            const canvas = document.createElement('canvas');
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+            viewer.appendChild(canvas);
+            await page.render({
+                canvasContext: canvas.getContext('2d'),
+                viewport
+            }).promise;
+        }
+
+        // Scroll reveal for slides
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.getElementById('presentation').querySelectorAll('canvas').forEach(c => observer.observe(c));
+    </script>
 </body>
 </html>
